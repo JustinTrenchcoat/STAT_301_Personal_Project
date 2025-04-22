@@ -1,0 +1,48 @@
+# R related
+.Rhistory
+.RData
+.Rproj.user/
+.Ruserdata
+
+# Quarto/R Markdown intermediate files
+*.pdf
+*.docx
+*.log
+*.aux
+*.out
+*.toc
+
+# Keep HTML for deployment
+# *.html ← don't ignore this!
+
+# Data files (ignore actual data, keep metadata/readme)
+data/*.csv
+data/*.RDS
+data/*.rds
+!data/README.md
+
+# Output and intermediate analysis files
+output/
+*.RDS
+*.png
+*.jpg
+*.jpeg
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# IDE
+.vscode/
+.idea/
+
+# Make
+*.d
+*.o
+*.so
+
