@@ -1,0 +1,81 @@
+---
+title: "Best Factors in Explaining Tips: A STAT 301 Case Study Project"
+author: "Wanqing Hu, Jia Xin Tan, Jiaming Chang, Iris Caglayan"
+format: 
+    html:
+        toc: true
+        toc-location: left
+        embed-resources: true
+editor: source
+bibliography: references.bib
+---
+
+**Course:** STAT 301 102, 2024-2025 Winter Term 2
+
+**Date:** 15 April 2025
+
+### Introduction
+In North America, tips are a customary amount of money given to the staff at dining establishments as a form of compliment or token of appreciation for their service. Typically, they are calculated as a percentage of the meal's price or customised based on consumers' discretion. Tipping behaviour is a subject of great interest across business industries and the social sciences as people understandably want to figure out how to earn more money and understand this interesting social phenomenon. Existing studies such as those by Michael Lynn, explore how tipping in the United States is influenced by people's beliefs across various situations (2015). Other studies study how tipping outcomes vary by gender and how this reflects differences in altruism (Parrett, 2023). 
+
+Given the restaurant tips dataset from kaggle (Badole, 2025), it would be fruitful to explore the relationships between several variables and the tipping amount in order to try and understand what really drives tipping behaviour. The studies mentioned above explore the tipping phenomenon from a socio-psychological perspective which we would like to find out given that our dataset has variables such as whether the tipper is a smoker and the gender of the tipper. However, we would also like to explore more of the practical aspects - the time or day when customers have a meal and how large their party size is - and their relation to the amount of tips given. The relationship between tips and gender has been explored in prior literature, but there is not much research that has been done exploring the variety of variables available in this tips dataset. This project thus seeks to find out which set of these input variables best explain the variation in the amount of tips. The primary goal of this investigation is inference. Results could potentially be useful for restaurants to adjust their marketing strategies and optimise their returns from service. Finding out which factors interact significantly with tip amounts would also be advantageous for developing future predictive algorithms that aim to predict amount of tips based on consumer transaction data.
+
+##### Data Description
+This dataset is obtained from https://www.kaggle.com/datasets/saurabhbadole/restaurant-tips-dataset.
+
+Collected from a popular restaurant over a specified period, this dataset looks into the tipping behavior in a restaurant setting. In this dataset, there are in total 244 observations, and 7 variables.
+    
+Table of variables used:
+| Variable Name | Discription | Type |
+| :---: | :---: | :---: |
+|total_bill| total bill amount in dollars|Numerical, independent variable|
+|sex| Gender of the person paying the bill (Male/Female)|Categorical, independent variable|
+|smoker|Whether the person is a smoker (Yes/No) |Categorical, independent variable|
+|day|Day of the week when the transaction took place (Thur/Fri/Sat/Sun)|Categorical, independent variable|
+|time|Time of day when the transaction took place (Lunch/Dinner)|Categorical, independent variable|
+|size|Size of the dining party (number of people)|Numerical, independent variable|
+|tip|Tip amount in dollars|Numerical, target variable|
+##### Research Question
+*Which set of input variables available in the tips dataset best explain the variation in the amount of tips?*
+
+### Methods and Results
+#### Exploratory Data Analysis (EDA)
+The data is already in a cleaned format.
+
+Above is a summary table for our dataset. Except for `tip`, we have 4 categorical variables and 2 numerical variables. There are no missing values.
+### Visualization
+This plot shows how tip amounts vary across days and meal times, with point color indicating party size. The range of tips differs by day of the week, with Saturday showing several higher values. Additionally, tips tend to be larger during dinner compared to lunch.
+
+
+This graph shows the relationship between tip and total bill, with point size indicating party size and color representing gender. There appears to be a strong linear association between total bill and tip. While a few high tips are visible on Saturday, they are reasonable within the context of the data and not extreme relative to other points. Therefore, no transformations or removals will be applied to our data.
+### Plan
+##### Method:
+1. Data would be splited into two portions with rate of 70%-30%, to create a training set and selection set.
+2. The backward selection algorithm is deployed to to construct a multiple linear regression model using the training set, and models with different set of explanatory varibables would be evaluated with AIC. 
+3. The multiple $R^2$ will be used to evaluate the model by calculating the proportion of the variation in tips explained by the model when applied to the selection set.   
+
+##### Justification of Method Used:
+Given that we want to find out which set of explanatory variables from the total set given are significant for model-fitting and making inferences, starting off with the full set of available input variables and eliminating from there makes sense since there are only 6 input variables and the computational effort required is reasonable. Previous exploratory data analysis and subsequent discussion within the group have revealed that there is insufficient data for proper comparison within categories - for example, insufficient lunch and dinner data for certain days of the week as seen from Visualisation 1. Hence, using a criterion that selects categorical variables as a whole rather than by specific levels would be better in this case because there is not enough information to accurately make such specific selections. A multiple linear regression is used because the response variable, amount of tips given, is a continuous variable and there are several input variables that are being taken into account. The multiple $R^2$ is used for model evaluation because it evaluates the proportion of the variance of the amount of tips (response variable) explained by the model with penalisation to compensate for the model's size. This allows us to check if the model fits the data well enough for inferences to be made.
+
+##### Assumptions required:
+* There is a linear relationship between the response and input variables.
+* Errors are independent of each other
+* The conditional distribution of error terms is normal
+* The variance of the error terms are approximately equal
+* No multicollinearity exists among the variables
+
+
+##### Interpretation of results:
+As seen from the analysis above, the chosen model unexpectedly ends up as a single linear regression with only one input variable, total bill, chosen. The multiple R-squared is 0.5454, which means the total bill is associated with about 54.54% of the variation in tip amount - a moderate association. The fact that only total bill was selected could mean potential multicollinearity with the other input variables or that there is a lack of strong relationships between the other input variables and the amount of tips given. 
+
+Since the final model contains only one covariate, it is clear that the model does not contain variables with high collinearity. 
+
+
+### Discussion
+
+The main goal of this project was to identify the factors that have a stronger relationship with tipping behavior. Surprisingly, the final model suggested total bill as the only significant predictor. This variable accounts for about 54.54% of the variation in tip amounts within the selected dataset. The final model excluded other variables—such as gender, smoker status, day, time, and party size—that did not significantly influence the tip amount. These results suggest that the total bill amount is the strongest—and maybe only significant—predictor of the tip amount in this dataset.
+
+Studies by Lynn (2015) and Parrett (2023) have underlined the influence of sociopsychological factors—including smoking status and gender—on tipping behavior. However, within this dataset, the suggested sociopsychological relationship on tipping behavior was not observed. This might be because this effect is not significant enough to notice, hidden by multicollinearity, or unevenly represented in the dataset (for example, on certain days, there are far more dinner data than lunch data (Visualization 1)). This research could be improved in various ways. First, using a more balanced dataset with an even representation of the data. The dataset's imbalance and relatively small size could have limited the model's ability to detect more subtle correlations and generalizability to different conditions. Additionally, to improve the strength of association and address model concerns, including interaction terms — such as between time and day or between gender and smoker status — might lead to the identification of significant relationships between input variables that were not captured by our additive model.
+
+These findings point to several interesting directions for future studies. First, examining the influence of cultural or geographical data on tipping culture could be one area of study. For example, while tipping higher amounts — approximately 20% —  is culturally ingrained, tipping is less prevalent and usually more modest in many European cultures. Secondly, including socioeconomic and in-depth psychological factors will help close the gap between monetary predictors and the more complicated sociopsychological causes of tipping behavior. While psychological data can describe personal satisfaction or values, socioeconomic elements might show how tipping is affected by financial ability and knowledge of social norms. These insights can provide a deeper understanding of tipping behavior and enable restaurants to create more focused marketing plans that resonate with their desired customer segment.
+
+Finally, the results of this study demonstrate the anticipated strong correlation between the tipping culture and the total bill amount. Furthermore, the results also show that in order to completely identify and understand the connection between sociopsychological factors and tipping behaviour, a more comprehensive and intricate dataset or an alternative approach to the dataset is required.
