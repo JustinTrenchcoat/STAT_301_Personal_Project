@@ -7,11 +7,11 @@ library(readr)
 
 "This script provides visualization for this report.
 
-Usage: 04-visualization.R --data_path=<data_path> --output_path=<output_path> --model_path=<model_path> --selection_path=<selection_path>
+Usage: 04-visualization.R --data_path=<data_path> --output_path=<output_path> --model_path=<model_path> --selection_path=<selection_path> --num_path=<num_path>
 " -> doc
 
 # enter this in terminal or Makefile:
-# Rscript code/04-visualization.R --data_path=data/tips.RDS --output_path=output/ --model_path=output/model.RDS --selection_path=output/selection.RDS
+# Rscript code/04-visualization.R --data_path=data/tips.RDS --output_path=output/ --model_path=output/model.RDS --selection_path=output/selection.RDS --num_path=output/num.RDS
 
 opt <- docopt(doc)
 
@@ -60,7 +60,7 @@ ggsave(paste0(opt$output_path, "fig_vis_2.png"))
 #load the model for post-fitting plot
 tips_model <- read_rds(opt$model_path)
 tips_bwd_bic <- read_rds(opt$selection_path)
-
+n <- read_rds(opt$num_path)
 # Main developer: Jiaming Chang
 # Contributor: Jiaming Chang
 

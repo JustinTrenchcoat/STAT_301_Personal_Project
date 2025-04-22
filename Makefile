@@ -13,8 +13,8 @@ index.html:	data/tips.RDS \
 			output/selection.RDS \
 			output/summary.RDS \
 			output/fig_vis_1.png \
-			output/fig_target_buying_1.png \
-			output/fig_target_persons_1.png \
+			output/fig_vis_2.png \
+			output/fig_vis_3.png \
 			reports/group4_report.html \
 			reports/group4_report.pdf 
 			quarto render reports/group4_report.qmd
@@ -29,16 +29,17 @@ data/tips.RDS: code/01-load.R
 
 # 02-EDA.R
 output/table.RDS: code/02-EDA.R
-	Rscript code/02-EDA.R --data_path=data/tips.RDS --output_path=data/table.RDS
+	Rscript code/02-EDA.R --data_path=data/tips.RDS --output_path=output/table.RDS
 
 		
 # 03-analysis.R
-output/model.RDS output/selection.RDS output/summary.RDS: code/03-analysis.R
+output/model.RDS output/selection.RDS output/summary.RDS output/num.RDS: code/03-analysis.R
 	Rscript code/03-analysis.R \
 	--data_path=data/tips.RDS \
 	--model_path=output/model.RDS \
 	--selection_path=output/selection.RDS \
-	--summary_path=output/summary.RDS
+	--summary_path=output/summary.RDS \
+	--num_path=output/num.RDS
 
 
 # 04-visualization.R
@@ -47,7 +48,8 @@ output/fig_vis_1.png output/fig_vis_2.png output/fig_vis_3.png: code/04-visualiz
 	--data_path=data/tips.RDS \
 	--output_path=output/ \
 	--model_path=output/model.RDS \
-	--selection_path=output/selection.RDS
+	--selection_path=output/selection.RDS \
+	--num_path=output/num.RDS
 
 #we ignore validation part first		
 # 05-data-validation.R
@@ -75,3 +77,4 @@ clean:
 		rm -rf docs/*
 		rm -rf reports/group4_report.html \
 				reports/group4_report.pdf
+		rm *.pdf

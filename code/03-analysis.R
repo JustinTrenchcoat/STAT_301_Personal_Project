@@ -9,11 +9,13 @@ library(MASS)
 
 "This script provides analysis for this report.
 
-Usage: 03-analysis.R --data_path=<data_path> --model_path=<model_path> --selection_path=<selection_path> --summary_path=<summary_path>
+Usage: 03-analysis.R --data_path=<data_path> --model_path=<model_path> --selection_path=<selection_path> --summary_path=<summary_path> --num_path=<num_path>
 " -> doc
 
 # enter this in terminal or Makefile:
-# Rscript code/03-analysis.R --data_path=data/tips.RDS --model_path=output/model.RDS --selection_path=output/selection.RDS --summary_path=output/summary.RDS
+# Rscript code/03-analysis.R --data_path=data/tips.RDS \
+# --model_path=output/model.RDS --selection_path=output/selection.RDS \
+# --summary_path=output/summary.RDS --num_path=output/num.RDS
 
 opt <- docopt(doc)
 
@@ -64,7 +66,7 @@ tips_select <- tips_select |>
 tips_model <- lm(tip ~ ., data = tips_train)
 write_rds(tips_model, opt$model_path)
 n <- nrow(tips_train)
-
+write_rds(n, opt$num_path)
 # Run stepwise selection with BIC (k = log(n))
 tips_bwd_bic <- stepAIC(tips_model, 
                        direction = "backward",

@@ -11,7 +11,7 @@ Usage: 02-EDA.R --data_path=<data_path>  --output_path=<output_path>
 " -> doc
 
 # enter this in terminal or Makefile:
-# Rscript code/02-EDA.R --data_path=data/tip.RDS --output_path=data/table.RDS
+# Rscript code/02-EDA.R --data_path=data/tips.RDS --output_path=output/table.RDS
 
 opt <- docopt(doc)
 
